@@ -5,9 +5,22 @@
 """
 class Stock:
     def __init__(self, symbol, name, shares):
-        self.symbol = symbol
-        self.name = name
-        self.shares = shares
+        ## Check for empty symbol string
+        if symbol:
+            self.symbol = symbol
+        else:
+            print("\n***Error: Ticker symbol missing")
+        ## Check for empty symbol string
+        if name:
+            self.name = name
+        else:
+            print("\n***Error: Company name missing")
+        ## Check for negative shares
+        if shares >= 0:
+            self.shares = shares
+        else:
+            print("\n***Error: Negative amount of shares.\nSetting to 0")
+            self.shares = 0
         self.DataList = [] # Daily stock data list
         
     def add_data(self, stock_data):
@@ -15,9 +28,27 @@ class Stock:
         
 class DailyData:
     def __init__(self, date, close, volume):
-        self.date = date
-        self.close = close
-        self.volume = volume
+        import datetime
+        today = datetime.date.today()
+        if date:
+            self.date = date
+        else:
+            print("\n***Error: Date missing, setting today's date")
+            self.date = today
+            
+        if close >= 0.00:
+            self.close = close
+        else:
+            print("\n***Error: Not a positive dollar amount.\nSetting the closing price to 0.01")
+            self.close = 0.01
+        if volume >= 0.00:
+            self.volume = volume
+        else:
+            print("\n***Error: Not a positive volume.\nSetting the volume to 1.")
+            self.volume = 1.00
+            
+
+
 
 # Unit Test - Do Not Change Code Below This Line *** *** *** *** *** *** *** *** ***
 # main() is used for unit testing only. It will run when stock_class.py is run.
@@ -25,6 +56,7 @@ class DailyData:
 # ready to continue with the next part of the project.
 
 def main():
+    import datetime
     error_count = 0
     error_list = []
     print("Unit Testing Starting---")
@@ -85,10 +117,12 @@ def main():
     try:
         dayData = DailyData("1/1/20",float(14.50),float(100000))
         testStock.add_data(dayData)
+        today = datetime.date.today()
         if testStock.DataList[0].date != "1/1/20":
-            error_count = error_count + 1
-            daily_data_error = True
-            error_list.append("Add Daily Data - Problem with Date")
+            if testStock.DataList[0].date != today:
+                error_count = error_count + 1
+                daily_data_error = True
+                error_list.append("Add Daily Data - Problem with Date")
         if testStock.DataList[0].close != 14.50:
             error_count = error_count + 1
             daily_data_error = True
