@@ -1,7 +1,15 @@
 # Stock-Tracker
 
-This is the class project for CEIS150 - Object Oriented Programming
-This is a stock tracking program
+Author: Nicholas Allen
+Date:   Oct - Dec 2022
+Reason: To track the values of stock investments
+    For:    DeVry University
+    With:   Professor Lieberman
+    During: November Session
+    Class:  CEIS150
+    GitHub: https://github.com/NicholasAllen1981/Stock-Tracker
+
+S.A.M. - Stock Analyzer Machine is the result of a class project for CEIS150 - Object Oriented Programming
 
 Week 1 (Module 1)
     Setting Up IDE and getting ready
