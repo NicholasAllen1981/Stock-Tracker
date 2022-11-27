@@ -3,7 +3,14 @@
     Date: 11.2.2022
     Purpose: CEIS150 - Track stock by symbol
 """
-class Stock:
+# Stock Class
+#  Parent Class
+##  Accepts symbol, name, and shares
+###   stock = Stock(symbol, name, shares)
+###     Creates Stock object
+###   functions: stock.add_data(stock_data)
+####    Adds stock object to list
+class Stock():
     def __init__(self, symbol, name, shares):
         ## Check for empty symbol string
         if symbol:
@@ -22,11 +29,17 @@ class Stock:
             print("\n***Error: Negative amount of shares.\nSetting to 0")
             self.shares = 0
         self.DataList = [] # Daily stock data list
-        
+    # Stock function to add stock
     def add_data(self, stock_data):
         self.DataList.append(stock_data)
-        
-class DailyData:
+     
+   
+# DailyData class
+#  Parent Class
+##  Accepts date, close, and volume
+###   dailyData = DailyData(date, close, volume)
+###     Creates Stock object
+class DailyData():
     def __init__(self, date, close, volume):
         import datetime
         today = datetime.date.today()
