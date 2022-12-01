@@ -57,7 +57,10 @@ Week 5 (Module 5)
         Added code to display_stock_chart(stock_list)
             Created chart using matplotlib and data added with add daily data option
 Week 6 (Module 6)
-    
+    Using stock_menu_v3.py
+        Added code to import_stock_csv(stock_list)
+        Added code to display_report(stock_list)
+            Downloaded historical data from yahoo finance and place file in same directory as these files.
 
 
             

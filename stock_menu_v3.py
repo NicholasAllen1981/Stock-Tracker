@@ -337,10 +337,83 @@ def display_chart(stock_list):
     _ = input("Press Enter to continue.")
 # Get price and volume history from Yahoo! Finance using CSV import.
 def import_stock_csv(stock_list):
-    print("This method is under construction")
-# Display Report 
+    clear_screen()
+    print_header("S.A.M. - Stock Analizing Machine","-- Add Daily Stock Data --")
+    print_ticker(stock_list)
+    symbol = input("Please Choose Stock Symbol from the List Above: ").upper()
+    fname = input("Please input file name:")
+    for stock in stock_list:
+        if stock.symbol == symbol:
+            with open(fname, newline='') as stockdata:
+                datareader = csv.reader(stockdata, delimiter=",")
+                next(datareader)
+                for row in datareader:
+                    daily_data = DailyData(str(row[0]),float(row[4]),float(row[6]))
+                    stock.add_data(daily_data)
+    display_report(stock_list)
+                
+# Display Report
 def display_report(stock_list):
-    print("This method is under construction")
+    clear_screen()
+    print_header("S.A.M. - Stock Analizing Machine","-- Add Daily Stock Data --")
+
+    for stock in stock_list:
+        count = 0
+        price_total = 0
+        volume_total = 0
+        lowPrice = 999999.99
+        highPrice = 0
+        lowVolume = 999999999999
+        highVolume = 0
+        priceChange = 0
+        print_H_bar("top")
+        print_at_middle("Report for: " + stock.name)
+        print_at_middle("Ticker Symbol: " + stock.symbol)
+        print_at_middle("Shares: " + str(stock.shares))
+        print_H_bar("middle")
+        for daily_data in stock.DataList:
+            count += 1
+            if count == 1:
+                startPrice = daily_data.close
+            elif count == len(stock.DataList) - 1:
+                endPrice = daily_data.close
+                priceChange = endPrice - startPrice
+            price_total = price_total + daily_data.close
+            volume_total = volume_total + daily_data.volume
+            if daily_data.close < lowPrice:
+                lowPrice = daily_data.close
+            if daily_data.close > highPrice:
+                highPrice = daily_data.close
+            if daily_data.volume < lowVolume:
+                lowVolume = daily_data.volume
+            if daily_data.volume > highVolume:
+                highVolume = daily_data.volume
+            
+        
+        if count > 0:
+            low_price = "Low Price: ${:,.2f}".format(lowPrice)
+            high_price = "High Price: ${:,.2f}".format(highPrice)
+            average_price = "Average Price: ${:,.2f}".format(price_total / count )
+            low_volume = "Low Volume: " + str(lowVolume)
+            high_volume = "High Volume: " + str(highVolume)
+            average_volume = "Average Volume: " + str(volume_total / count)
+            change_price = "Change in Price: ${:,.2f}".format(priceChange)
+            profit_loss = "Profit / Loss: ${:,.2f}".format(priceChange * stock.shares)
+            print_at_left(str(low_price))
+            print_at_left(str(high_price))
+            print_at_left(str(average_price))
+            print_at_left(str(low_volume))
+            print_at_left(str(high_volume))
+            print_at_left(str(average_volume))
+            print_at_left(str(change_price))
+            print_at_left(str(profit_loss))
+        else:
+            print_at_middle("NO DAILY HISTORY")
+        print_H_bar("bottom")
+    print_H_bar("top")
+    print_at_middle("-- REPORT COMPLETE --")
+    print_H_bar("bottom")
+    _ = input("Press Enter to continue.")
 # About screen
 def about_SAM(stock_list):
     clear_screen()
